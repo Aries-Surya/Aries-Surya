@@ -2,9 +2,9 @@
 
 Welcome to my GitHub profile!
 
-Hey there! I'm **Surya Prakash**, an enthusiastic and certified Software Developer passionate about **DevOps, Cloud Computing (AWS, GCP, Azure)**, **Full Stack Development**, and **Networking**. I enjoy building scalable and user-friendly applications and love automating things with CI/CD pipelines and cloud-native tools.
+Hey there! I'm **Surya Prakash**, a **Cloud & Platform Engineer at ZEB** with a passion for **DevOps, Cloud Computing (AWS, GCP, Azure)**, **Infrastructure as Code**, and **Platform Engineering**. I specialize in building scalable cloud infrastructure, automating deployments, and implementing robust CI/CD pipelines.
 
-With hands-on experience from **Zoho Corporation** and a solid academic foundation, I specialize in technologies like **Angular, Django, Docker, Kubernetes, GitHub Actions, Terraform**, and more.
+With hands-on experience from **Zoho Corporation** and now **ZEB**, I've worked extensively with **AWS (ECS, EKS, Lambda, CloudWatch, CloudTrail)**, **Terraform**, **Kubernetes**, **ArgoCD**, **Docker**, **GitHub Actions**, and modern DevOps practices. I'm passionate about cloud-native architectures, infrastructure automation, and building reliable, scalable systems.
 
 Let's connect and create something impactful together! 🚀
 
@@ -32,10 +32,12 @@ Let's connect and create something impactful together! 🚀
 
 ---
 
-### **Artifical Intelligence**
+### **Artificial Intelligence & Machine Learning**
 
 ![Pytorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
 ![Weights & Biases](https://img.shields.io/badge/Weights_&_Biases-FFBE00?style=for-the-badge&logo=WeightsAndBiases&logoColor=white)
+![LangChain](https://img.shields.io/badge/LangChain-121212?style=for-the-badge&logo=chainlink&logoColor=white)
+![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=for-the-badge&logo=fastapi&logoColor=white)
 
 ---
 
@@ -66,6 +68,8 @@ Let's connect and create something impactful together! 🚀
 ![DockerCompose](https://img.shields.io/badge/Docker%20Compose-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![Portainer](https://img.shields.io/badge/Portainer-13BEF9?style=for-the-badge&logo=portainer&logoColor=white)
 ![Kubernetes](https://img.shields.io/badge/Kubernetes-3069DE?style=for-the-badge&logo=kubernetes&logoColor=white)
+![ArgoCD](https://img.shields.io/badge/ArgoCD-EF7B4D?style=for-the-badge&logo=argo&logoColor=white)
+![Helm](https://img.shields.io/badge/Helm-0F1689?style=for-the-badge&logo=helm&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/github%20actions-%232671E5.svg?style=for-the-badge&logo=githubactions&logoColor=white)
 ![Git](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)
 ![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)
@@ -74,12 +78,18 @@ Let's connect and create something impactful together! 🚀
 ![Nextcloud](https://img.shields.io/badge/Nextcloud-0082C9?style=for-the-badge&logo=Nextcloud&logoColor=white)
 ![Terraform](https://img.shields.io/badge/Terraform-7B42BC?style=for-the-badge&logo=terraform&logoColor=white)
 ![Ansible](https://img.shields.io/badge/Ansible-000000?style=for-the-badge&logo=ansible&logoColor=white)
+![Grafana](https://img.shields.io/badge/Grafana-F46800?style=for-the-badge&logo=grafana&logoColor=white)
+![Prometheus](https://img.shields.io/badge/Prometheus-E6522C?style=for-the-badge&logo=prometheus&logoColor=white)
 
 ---
 
-### **Cloud Platforms**
+### **Cloud Platforms & Services**
 
 ![AWS](https://img.shields.io/badge/Amazon_Web_Services-FF9900?style=for-the-badge&logo=amazonwebservices&logoColor=white)
+![AWS ECS](https://img.shields.io/badge/AWS_ECS-FF9900?style=for-the-badge&logo=amazonecs&logoColor=white)
+![AWS EKS](https://img.shields.io/badge/AWS_EKS-FF9900?style=for-the-badge&logo=amazoneks&logoColor=white)
+![AWS Lambda](https://img.shields.io/badge/AWS_Lambda-FF9900?style=for-the-badge&logo=awslambda&logoColor=white)
+![CloudWatch](https://img.shields.io/badge/CloudWatch-FF4F8B?style=for-the-badge&logo=amazoncloudwatch&logoColor=white)
 ![Azure](https://img.shields.io/badge/azure-%230072C6.svg?style=for-the-badge&logo=microsoftazure&logoColor=white)
 ![Google Cloud](https://img.shields.io/badge/Google_Cloud-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white)
 ![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase)
@@ -137,8 +147,18 @@ Let's connect and create something impactful together! 🚀
 
 ## 🚀 Featured Projects
 
+### Cloud & DevOps Projects
+- 🔹 **AWS ECS Infrastructure with Terraform** – Production-ready ECS deployment with modular Terraform architecture, including VPC, ALB, RDS, CloudWatch, and automated CI/CD pipelines.
+- 🔹 **AWS EKS with ArgoCD** – Kubernetes cluster on AWS EKS with GitOps deployment using ArgoCD, Helm charts, and automated infrastructure provisioning.
+- 🔹 **Multi-Cloud Terraform Modules** – Reusable IaC modules for AWS services (EC2, Lambda, S3, RDS, CloudFront, Route53, ACM, Bedrock) with GitHub Actions CI/CD.
+- 🔹 **GitHub Reusable Workflows** – Centralized CI/CD workflows for multiple repositories with shared workflow templates and automated testing.
+- 🔹 **Helm Chart Deployments** – Kubernetes application packaging and deployment using Helm with custom values and configurations.
+
+### Machine Learning Projects
 - 🔹 [**YOLOv11 Human Detection**](https://github.com/Aries-Surya/Human-Detection-Using-Machine-Learning) – Drone surveillance human detection using YOLOv11-OBB.
 - 🔹 [**License Plate Recognition**](https://github.com/Aries-Surya/Automatic-Number-Plate-Recognition-Using-ML) – Real-time detection using YOLOv8 and OCR.
+
+### DevOps & Automation
 - 🔹 [**CI/CD Pipeline with Docker & GitHub Actions**](https://github.com/Aries-Surya/Angular-Docker-CI-CD) – Reduced deployment time by 50%.
 - 🔹 [**AWS Monitoring (CloudWatch & CloudTrail)**](https://github.com/Aries-Surya/AWS-Cloud-Monitoring) – Real-time EC2 monitoring with automation and log analysis.
 
@@ -151,15 +171,32 @@ Let's connect and create something impactful together! 🚀
 
 ---
 
-## 🎓 Certifications
+## 🎓 Certifications & Training
 
 - **AWS Cloud Certification** – Kyndryl University
-- **Cisco Networking Basics** – Cisco Networking Academy
+- **AWS Solutions Architect Associate (SAEC)** – In Progress
+- **Cisco Networking Basics (CCNA)** – Cisco Networking Academy
 - **Google Cloud Fundamentals** – Coursera
 - **DevOps & Containers** – IBM, OpenShift, Kubernetes (Coursera)
+- **Introduction to Kubernetes** – IBM/Coursera
+- **Terraform Infrastructure as Code** – Hands-on Experience
 - **Cybersecurity** – IBM, TATA Forage, Wireshark, Nmap
 
 ---
+
+## 💼 Professional Experience
+
+### Cloud & Platform Engineer @ ZEB
+- Designing and implementing cloud infrastructure on AWS using Terraform
+- Building and managing containerized applications with ECS and EKS
+- Implementing GitOps workflows with ArgoCD and Helm
+- Developing CI/CD pipelines with GitHub Actions
+- Infrastructure monitoring and optimization with CloudWatch and Grafana
+
+### Software Developer @ Zoho Corporation
+- Full-stack development with Angular and Django
+- Building scalable web applications
+- Implementing automated testing and deployment pipelines
 
 ## 🤝 Volunteering Highlights
 
