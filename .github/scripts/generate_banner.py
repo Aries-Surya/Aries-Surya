@@ -210,7 +210,7 @@ def generate(mode: str) -> str:
         kt_hold   = "0.8333"
         kt_fade   = "0.9500"
         
-        w(f'<path d="{d_str}" fill="{t["portrait_col"]}" shape-rendering="crispEdges" opacity="0">')
+        w(f'  <path d="{d_str}" fill="{t["portrait_col"]}" shape-rendering="geometricPrecision" opacity="0">')
         w(f'  <animate attributeName="opacity" values="0;0;1;1;0;0"'
           f' keyTimes="0;{kt_appear};{kt_appear};{kt_hold};{kt_fade};1"'
           f' dur="{PRINT_LOOP_DUR}s" repeatCount="indefinite"/>')
