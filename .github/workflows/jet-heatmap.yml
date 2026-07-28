@@ -7,7 +7,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "scripts/generate.mjs"
+      - ".github/scripts/generate.mjs"
       - "package.json"
       - ".github/workflows/jet-heatmap.yml"
 
@@ -32,7 +32,7 @@ jobs:
           GH_USERNAME: ${{ github.repository_owner }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           OUTPUT_PATH: dist/github-jet.svg
-        run: node scripts/generate.mjs
+        run: node .github/scripts/generate.mjs
 
       - name: Commit and push if changed
         uses: stefanzweifel/git-auto-commit-action@v5

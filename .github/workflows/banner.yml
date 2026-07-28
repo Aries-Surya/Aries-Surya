@@ -7,7 +7,7 @@ on:
   push:
     branches: [main]
     paths:
-      - "scripts/generate_banner.py"
+      - ".github/scripts/generate_banner.py"
       - ".github/workflows/banner.yml"
 
 permissions:
@@ -27,7 +27,7 @@ jobs:
           python-version: "3.11"
 
       - name: Generate banner SVGs
-        run: python scripts/generate_banner.py
+        run: python .github/scripts/generate_banner.py
 
       - name: Commit and push if changed
         uses: stefanzweifel/git-auto-commit-action@v5
