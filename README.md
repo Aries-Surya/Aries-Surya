@@ -18,14 +18,14 @@
 
 <br/>
 
-<!-- Stats + Top languages — side by side in a table (most reliable layout) -->
+<!-- Stats + Top languages — side by side in a table (using working dedicated instance) -->
 <table border="0" cellpadding="0" cellspacing="4" width="100%">
   <tr>
     <td width="50%" align="center">
-      <img width="100%" src="https://github-readme-stats.vercel.app/api?username=Aries-Surya&show_icons=true&count_private=true&include_all_commits=true&hide_border=true&title_color=22D3EE&icon_color=A78BFA&text_color=94A3B8&bg_color=0A101F" alt="Surya's GitHub stats" />
+      <img width="100%" src="https://github-readme-stats-sigma-rosy-28.vercel.app/api?username=Aries-Surya&show_icons=true&count_private=true&include_all_commits=true&hide_border=true&title_color=22D3EE&icon_color=A78BFA&text_color=94A3B8&bg_color=0A101F" alt="Surya's GitHub stats" />
     </td>
     <td width="50%" align="center">
-      <img width="100%" src="https://github-readme-stats.vercel.app/api/top-langs/?username=Aries-Surya&layout=compact&langs_count=8&hide_border=true&title_color=22D3EE&text_color=94A3B8&bg_color=0A101F" alt="Top languages" />
+      <img width="100%" src="https://github-readme-stats-sigma-rosy-28.vercel.app/api/top-langs/?username=Aries-Surya&layout=compact&langs_count=8&hide_border=true&title_color=22D3EE&text_color=94A3B8&bg_color=0A101F" alt="Top languages" />
     </td>
   </tr>
 </table>
