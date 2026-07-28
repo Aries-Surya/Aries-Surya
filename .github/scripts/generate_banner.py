@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """
-GitHub Profile Banner Generator — Line-by-Line Printing Portrait Animation.
+GitHub Profile Banner Generator — Full Portrait Line-by-Line Printing Loop.
 
 Design:
-  - Left panel (380×485): Floyd-Steinberg dithered portrait of Surya Prakash
+  - Left panel (380×485): Complete, full dithered portrait of Surya Prakash (no grid lines, no cropping to eyes)
   - Animation: Matrix / Holographic print effect — scans and prints line-by-line from top to bottom,
     holds full portrait, then smoothly resets in a continuous loop.
   - NO third-party logos (no Python, Docker, Git logos)
@@ -13,6 +13,7 @@ Design:
 import os, math, random
 import numpy as np
 from PIL import Image, ImageOps, ImageEnhance, ImageFilter
+from scipy.ndimage import distance_transform_edt, binary_closing, binary_fill_holes, label
 
 # ── Paths ──────────────────────────────────────────────────────────────────────
 SCRIPT_DIR  = os.path.dirname(os.path.abspath(__file__))
@@ -82,20 +83,6 @@ def dither_fs(arr_float: np.ndarray) -> np.ndarray:
                 if y+1 < h and x-1 >= 0:        a[y+1, x-1] += err * 1/16
     return out
 
-# ── Background segmentation (dark mode) ───────────────────────────────────────
-def segment_subject_dark(img_rgb: np.ndarray) -> np.ndarray:
-    from scipy.ndimage import binary_closing, binary_fill_holes, label
-    bg_col = np.array([238, 36, 42], dtype=float)
-    dist   = np.linalg.norm(img_rgb.astype(float) - bg_col, axis=2)
-    mask   = dist > 50
-    mask   = binary_closing(mask, iterations=3)
-    mask   = binary_fill_holes(mask)
-    lbl, n = label(mask)
-    if n == 0:
-        return mask
-    sizes  = [(lbl == i).sum() for i in range(1, n+1)]
-    return lbl == (np.argmax(sizes) + 1)
-
 def path_from_dots(dots: np.ndarray) -> str:
     return "".join(f"M{int(x)} {int(y)}h1.8v1.8h-1.8z" for x, y in dots)
 
@@ -105,31 +92,42 @@ def generate(mode: str) -> str:
     svg  = []
     w    = svg.append
 
-    print(f"  [{mode}] processing portrait …")
-    img_pil = Image.open(os.path.join(ASSETS, "image.png"))
-    iw, ih  = img_pil.size
+    print(f"  [{mode}] processing full portrait (removing grid lines & restoring full image) …")
+    img_pil = Image.open(os.path.join(ASSETS, "image.png")).convert("RGB")
     
-    # Extract single portrait tile if contact sheet
-    if iw >= 1000 and ih >= 1000:
-        tw, th = iw // 5, ih // 5
-        img_pil = img_pil.crop((2*tw, 1*th, 3*tw, 2*th))
-        iw, ih  = img_pil.size
+    # 1. Resize full image to 150x170 for portrait box
+    img_full = img_pil.resize((150, 170), Image.LANCZOS)
+    arr_full = np.array(img_full)
 
-    # Head + shoulders crop
-    box     = (int(iw*0.05), int(ih*0.02), int(iw*0.95), int(ih*0.95))
-    img_rgb = img_pil.crop(box).resize((150, 170), Image.LANCZOS).convert("RGB")
-    img_rgb = ImageOps.autocontrast(img_rgb, cutoff=1)
-    img_rgb = ImageEnhance.Contrast(img_rgb).enhance(1.4)
-    img_rgb = img_rgb.filter(ImageFilter.UnsharpMask(radius=3, percent=140))
-    arr_rgb = np.array(img_rgb)
-    gray    = np.array(img_rgb.convert("L"), dtype=float)
+    # 2. Identify red background and red grid line pixels
+    bg_red = np.array([238, 36, 38], dtype=float)
+    dist_to_red = np.linalg.norm(arr_full.astype(float) - bg_red, axis=2)
+    mask_subject = dist_to_red > 45   # True = subject pixel, False = red bg / grid line
+
+    # 3. Inpaint grid line gaps from nearest subject pixels using Euclidean distance transform
+    indices = distance_transform_edt(~mask_subject, return_distances=False, return_indices=True)
+    arr_inpainted = arr_full[tuple(indices)]
+
+    # 4. Image contrast & unsharp mask on clean inpainted image
+    img_clean = Image.fromarray(arr_inpainted)
+    img_clean = ImageOps.autocontrast(img_clean, cutoff=1)
+    img_clean = ImageEnhance.Contrast(img_clean).enhance(1.4)
+    img_clean = img_clean.filter(ImageFilter.UnsharpMask(radius=3, percent=140))
+    arr_clean = np.array(img_clean)
+    gray_clean = np.array(img_clean.convert("L"), dtype=float)
+
+    # 5. Final subject mask
+    dist_clean = np.linalg.norm(arr_clean.astype(float) - bg_red, axis=2)
+    mask_final = dist_clean > 45
+    mask_final = binary_closing(mask_final, iterations=2)
+    mask_final = binary_fill_holes(mask_final)
 
     if dark:
-        mask       = segment_subject_dark(arr_rgb)
-        gray_final = np.where(mask, gray, 0.0)
+        gray_final = np.where(mask_final, gray_clean, 0.0)
     else:
-        gray_final = 255.0 - gray
+        gray_final = np.where(mask_final, 255.0 - gray_clean, 0.0)
 
+    # 6. Floyd-Steinberg dithering
     dithered = dither_fs(gray_final)
     rows, cols = np.where(dithered == 255)
     dot_x   = PORTRAIT_CX - 150 + cols * 2
@@ -137,8 +135,7 @@ def generate(mode: str) -> str:
     all_dots = np.column_stack((dot_x, dot_y))
     print(f"  [{mode}] total portrait dots: {len(all_dots)}")
 
-    # ── Group dots by y-coordinate (row by row lines for printing) ────────────
-    # Unique rows
+    # ── Group dots by y-coordinate (scanlines for printing) ────────────────────
     unique_y = np.unique(all_dots[:, 1])
     unique_y.sort()
     
@@ -193,12 +190,11 @@ def generate(mode: str) -> str:
     w(f'<rect x="{LEFT_X+20}" y="{LEFT_Y-8}" width="90" height="15" class="bg"/>')
     w(f'<text x="{LEFT_X+25}" y="{LEFT_Y+4}" class="fl">VISUAL.MAP</text>')
 
-    # ── Laser Scan Beam (slides down from top of portrait to bottom) ────────────
-    # Laser runs from 0.0s to 3.5s (0.5833 fraction of PRINT_LOOP_DUR)
+    # ── Laser Scan Beam ─────────────────────────────────────────────────────────
     scan_y_start = min_y - 10
     scan_y_end   = max_y + 10
     w(f'<line x1="{PORTRAIT_CX-80}" y1="{scan_y_start}" x2="{PORTRAIT_CX+80}" y2="{scan_y_start}"'
-      f' stroke="{t["laser"]}" stroke-width="2" opacity="0.95" filter="url(#glow)">')
+      f' stroke="{t["laser"]}" stroke-width="2" opacity="0.95">')
     w(f'  <animate attributeName="y1" values="{scan_y_start};{scan_y_end};{scan_y_end};{scan_y_start}"'
       f' keyTimes="0;0.5833;0.90;1" dur="{PRINT_LOOP_DUR}s" repeatCount="indefinite"/>')
     w(f'  <animate attributeName="y2" values="{scan_y_start};{scan_y_end};{scan_y_end};{scan_y_start}"'
@@ -208,15 +204,13 @@ def generate(mode: str) -> str:
     w('</line>')
 
     # ── Line-by-Line Printed Portrait ─────────────────────────────────────────
-    # Each row appears when laser reaches its y-position, holds till 5.0s (0.8333), then fades
     w('<g id="portrait-lines">')
     for idx, (y_val, pts) in enumerate(lines_list):
         d_str = path_from_dots(pts)
-        # Fraction of print phase (0.0 to 0.5833) when this row is printed
         row_frac = 0.5833 * (idx / max(num_lines - 1, 1))
         kt_appear = f"{row_frac:.4f}"
-        kt_hold   = "0.8333"   # hold full till 5.0s
-        kt_fade   = "0.9500"   # fade out by 5.7s
+        kt_hold   = "0.8333"
+        kt_fade   = "0.9500"
         
         w(f'<path d="{d_str}" fill="{t["portrait_col"]}" shape-rendering="crispEdges" opacity="0">')
         w(f'  <animate attributeName="opacity" values="0;0;1;1;0;0"'
@@ -282,11 +276,11 @@ def generate(mode: str) -> str:
 if __name__ == "__main__":
     import sys
     for mode in ("dark", "light"):
-        print(f"\nGenerating {mode}.svg (Line-by-Line Print Loop) …")
+        print(f"\nGenerating {mode}.svg (Full Clean Portrait Line-by-Line Print Loop) …")
         content = generate(mode)
         out = os.path.join(ROOT, f"{mode}.svg")
         with open(out, "w", encoding="utf-8") as f:
             f.write(content)
         kb = os.path.getsize(out) / 1024
         print(f"  Wrote {out}  ({kb:.0f} KB)")
-    print("\nDone. Line-by-line portrait banner updated successfully.")
+    print("\nDone. Full clean portrait banner updated successfully.")
