@@ -26,6 +26,9 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Install dependencies
+        run: pip install pillow numpy scipy
+
       - name: Generate banner SVGs
         run: python .github/scripts/generate_banner.py
 
