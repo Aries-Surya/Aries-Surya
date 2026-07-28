@@ -65,41 +65,16 @@
 <!-- ===== SOCIAL BADGES ===== -->
 
 <br/>
-<div align="center">
-
-<a href="https://www.linkedin.com/in/suryaprakash81/">
-  <img src="https://img.shields.io/badge/LinkedIn-0A101F?style=for-the-badge&logoColor=white&labelColor=0A101F&logo=linkedin" alt="LinkedIn" />
-</a>
-&nbsp;&nbsp;
-<a href="https://suryaprakash-portfolio.vercel.app/">
-  <img src="https://img.shields.io/badge/Portfolio-0A101F?style=for-the-badge&logo=About.me&logoColor=22D3EE&labelColor=0A101F" alt="Portfolio" />
-</a>
-&nbsp;&nbsp;
-<a href="mailto:suryaprakash.g.official@gmail.com">
-  <img src="https://img.shields.io/badge/Email-0A101F?style=for-the-badge&logo=gmail&logoColor=EF4444&labelColor=0A101F" alt="Email" />
-</a>
-&nbsp;&nbsp;
-<a href="https://x.com/aries_surya_">
-  <img src="https://img.shields.io/badge/X-0A101F?style=for-the-badge&logo=x&logoColor=F8FAFC&labelColor=0A101F" alt="X" />
-</a>
-&nbsp;&nbsp;
-<a href="https://instagram.com/aries_surya_">
-  <img src="https://img.shields.io/badge/Instagram-0A101F?style=for-the-badge&logo=instagram&logoColor=A78BFA&labelColor=0A101F" alt="Instagram" />
-</a>
-&nbsp;&nbsp;
-<a href="https://www.youtube.com/@SuryaInformative">
-  <img src="https://img.shields.io/badge/YouTube-0A101F?style=for-the-badge&logo=youtube&logoColor=22D3EE&labelColor=0A101F" alt="YouTube" />
-</a>
-&nbsp;&nbsp;
-<a href="https://medium.com/@ariessurya8124">
-  <img src="https://img.shields.io/badge/Medium-0A101F?style=for-the-badge&logo=medium&logoColor=F8FAFC&labelColor=0A101F" alt="Medium" />
-</a>
-&nbsp;&nbsp;
-<a href="https://discord.gg/RnxVTPs2">
-  <img src="https://img.shields.io/badge/Discord-0A101F?style=for-the-badge&logo=discord&logoColor=5865F2&labelColor=0A101F" alt="Discord" />
-</a>
-
-</div>
+<p align="center">
+  <a href="https://www.linkedin.com/in/suryaprakash81/"><img src="https://img.shields.io/badge/LinkedIn-0A101F?style=for-the-badge&logoColor=white&labelColor=0A101F&logo=linkedin" alt="LinkedIn" /></a>&nbsp;
+  <a href="https://suryaprakash-portfolio.vercel.app/"><img src="https://img.shields.io/badge/Portfolio-0A101F?style=for-the-badge&logo=About.me&logoColor=22D3EE&labelColor=0A101F" alt="Portfolio" /></a>&nbsp;
+  <a href="mailto:suryaprakash.g.official@gmail.com"><img src="https://img.shields.io/badge/Email-0A101F?style=for-the-badge&logo=gmail&logoColor=EF4444&labelColor=0A101F" alt="Email" /></a>&nbsp;
+  <a href="https://x.com/aries_surya_"><img src="https://img.shields.io/badge/X-0A101F?style=for-the-badge&logo=x&logoColor=F8FAFC&labelColor=0A101F" alt="X" /></a>&nbsp;
+  <a href="https://instagram.com/aries_surya_"><img src="https://img.shields.io/badge/Instagram-0A101F?style=for-the-badge&logo=instagram&logoColor=A78BFA&labelColor=0A101F" alt="Instagram" /></a>&nbsp;
+  <a href="https://www.youtube.com/@SuryaInformative"><img src="https://img.shields.io/badge/YouTube-0A101F?style=for-the-badge&logo=youtube&logoColor=22D3EE&labelColor=0A101F" alt="YouTube" /></a>&nbsp;
+  <a href="https://medium.com/@ariessurya8124"><img src="https://img.shields.io/badge/Medium-0A101F?style=for-the-badge&logo=medium&logoColor=F8FAFC&labelColor=0A101F" alt="Medium" /></a>&nbsp;
+  <a href="https://discord.gg/RnxVTPs2"><img src="https://img.shields.io/badge/Discord-0A101F?style=for-the-badge&logo=discord&logoColor=5865F2&labelColor=0A101F" alt="Discord" /></a>
+</p>
 
 <!-- ===== END SOCIAL BADGES ===== -->
 

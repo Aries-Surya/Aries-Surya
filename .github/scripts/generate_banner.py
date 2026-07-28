@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 """
-GitHub Profile Banner Generator — Full Seamless Portrait Line-by-Line Printing Loop.
+GitHub Profile Banner Generator — Seamless Grid-Free Portrait Line-by-Line Printing Loop.
 
 Design:
-  - Left panel (380×485): Complete, seamless dithered portrait of Surya Prakash (grid lines completely erased & interpolated)
+  - Left panel (380×485): Complete, seamless dithered portrait of Surya Prakash
+    (grid pattern/graph paper lines completely erased via morphological closing & median filtering)
   - Animation: Matrix / Holographic print effect — scans and prints line-by-line from top to bottom,
     holds full portrait, then smoothly resets in a continuous loop.
   - NO third-party logos (no Python, Docker, Git logos)
@@ -13,7 +14,7 @@ Design:
 import os, math, random
 import numpy as np
 from PIL import Image, ImageOps, ImageEnhance, ImageFilter
-from scipy.ndimage import binary_closing, binary_fill_holes
+from scipy.ndimage import grey_closing, median_filter, binary_closing, binary_fill_holes
 
 # ── Paths ──────────────────────────────────────────────────────────────────────
 SCRIPT_DIR  = os.path.dirname(os.path.abspath(__file__))
@@ -86,70 +87,45 @@ def dither_fs(arr_float: np.ndarray) -> np.ndarray:
 def path_from_dots(dots: np.ndarray) -> str:
     return "".join(f"M{int(x)} {int(y)}h1.8v1.8h-1.8z" for x, y in dots)
 
-def remove_grid_lines(arr_float: np.ndarray) -> np.ndarray:
-    """Linearly interpolate across the 4 vertical & horizontal grid channels to remove grid lines."""
-    h, w, c = arr_float.shape
-    arr_clean = arr_float.copy()
-    grid_centers = [int(w * i / 5.0) for i in range(1, 5)]
-
-    # 1. Interpolate vertical grid channels
-    for cx in grid_centers:
-        x1, x2 = max(0, cx - 7), min(w - 1, cx + 7)
-        left_val  = arr_clean[:, max(0, x1-1):x1, :]
-        right_val = arr_clean[:, x2+1:min(w, x2+2), :]
-        if left_val.shape[1] > 0 and right_val.shape[1] > 0:
-            for i, x in enumerate(range(x1, x2+1)):
-                alpha = (i + 1) / (x2 - x1 + 2)
-                arr_clean[:, x, :] = (1 - alpha) * left_val[:, 0, :] + alpha * right_val[:, 0, :]
-
-    # 2. Interpolate horizontal grid channels
-    for cy in grid_centers:
-        y1, y2 = max(0, cy - 7), min(h - 1, cy + 7)
-        top_val = arr_clean[max(0, y1-1):y1, :, :]
-        bot_val = arr_clean[y2+1:min(h, y2+2), :, :]
-        if top_val.shape[0] > 0 and bot_val.shape[0] > 0:
-            for i, y in enumerate(range(y1, y2+1)):
-                alpha = (i + 1) / (y2 - y1 + 2)
-                arr_clean[y, :, :] = (1 - alpha) * top_val[0, :, :] + alpha * bot_val[0, :, :]
-
-    return arr_clean
-
 def generate(mode: str) -> str:
     t    = THEMES[mode]
     dark = (mode == "dark")
     svg  = []
     w    = svg.append
 
-    print(f"  [{mode}] processing portrait (interpolating & removing grid lines) …")
+    print(f"  [{mode}] processing portrait (morphological closing + median filter to erase grid lines) …")
     img_pil = Image.open(os.path.join(ASSETS, "image.png")).convert("RGB")
-    arr_orig = np.array(img_pil).astype(float)
     
-    # Remove grid lines at full resolution before resizing
-    arr_nogrid = remove_grid_lines(arr_orig)
-    img_nogrid = Image.fromarray(arr_nogrid.astype(np.uint8))
+    # 1. Resize image to 150x170 for portrait box
+    img_resized = img_pil.resize((150, 170), Image.LANCZOS)
+    gray = np.array(img_resized.convert("L"), dtype=float)
 
-    # Resize clean image to 150x170 for portrait box
-    img_resized = img_nogrid.resize((150, 170), Image.LANCZOS)
-    img_contrast = ImageOps.autocontrast(img_resized, cutoff=1)
-    img_contrast = ImageEnhance.Contrast(img_contrast).enhance(1.4)
-    img_contrast = img_contrast.filter(ImageFilter.UnsharpMask(radius=3, percent=140))
-    arr_clean = np.array(img_contrast)
+    # 2. Erase fine dark grid/graph-paper lines using grey_closing + median filter
+    closed_gray = grey_closing(gray, size=(3, 3))
+    median_gray = median_filter(closed_gray, size=3)
 
-    # Red background segmentation
+    # 3. Image contrast & unsharp mask on clean portrait
+    img_clean = Image.fromarray(median_gray.astype(np.uint8))
+    img_clean = ImageOps.autocontrast(img_clean, cutoff=1)
+    img_clean = ImageEnhance.Contrast(img_clean).enhance(1.4)
+    img_clean = img_clean.filter(ImageFilter.UnsharpMask(radius=2, percent=120))
+    arr_clean = np.array(img_clean)
+    gray_clean = np.array(img_clean.convert("L"), dtype=float)
+
+    # 4. Red background segmentation
+    arr_rgb = np.array(img_resized)
     bg_red = np.array([238, 36, 42], dtype=float)
-    dist = np.linalg.norm(arr_clean.astype(float) - bg_red, axis=2)
+    dist = np.linalg.norm(arr_rgb.astype(float) - bg_red, axis=2)
     mask_subject = dist > 45
     mask_subject = binary_closing(mask_subject, iterations=2)
     mask_subject = binary_fill_holes(mask_subject)
-
-    gray_clean = np.array(img_contrast.convert("L"), dtype=float)
 
     if dark:
         gray_final = np.where(mask_subject, gray_clean, 0.0)
     else:
         gray_final = np.where(mask_subject, 255.0 - gray_clean, 0.0)
 
-    # Floyd-Steinberg dithering
+    # 5. Floyd-Steinberg dithering
     dithered = dither_fs(gray_final)
     rows, cols = np.where(dithered == 255)
     dot_x   = PORTRAIT_CX - 150 + cols * 2
@@ -298,7 +274,7 @@ def generate(mode: str) -> str:
 if __name__ == "__main__":
     import sys
     for mode in ("dark", "light"):
-        print(f"\nGenerating {mode}.svg (Seamless Grid-Free Portrait Line-by-Line Print Loop) …")
+        print(f"\nGenerating {mode}.svg (Morphological Grid-Free Portrait Line-by-Line Print Loop) …")
         content = generate(mode)
         out = os.path.join(ROOT, f"{mode}.svg")
         with open(out, "w", encoding="utf-8") as f:
