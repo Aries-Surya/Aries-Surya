@@ -1,0 +1,40 @@
+name: Generate Animated Banner SVG
+
+on:
+  schedule:
+    - cron: "0 0 * * 0"    # every Sunday at midnight
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "assets/**"
+      - "scripts/generate_banner.py"
+      - ".github/workflows/banner.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install pillow numpy
+
+      - name: Generate banner SVGs
+        run: python scripts/generate_banner.py
+
+      - name: Commit and push if changed
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: regenerate banner SVGs [skip ci]"
+          file_pattern: "dark.svg light.svg"

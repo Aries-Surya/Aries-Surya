@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Human Detection",
+    "repo": "Aries-Surya/Human-Detection-Using-Machine-Learning",
+    "description": "Drone surveillance human detection using YOLOv11-OBB model",
+    "tags": ["Python", "YOLOv11", "ML"]
+  },
+  {
+    "name": "License Plate OCR",
+    "repo": "Aries-Surya/Automatic-Number-Plate-Recognition-Using-ML",
+    "description": "Real-time license plate detection using YOLOv8 and OCR",
+    "tags": ["Python", "YOLOv8", "OCR"]
+  },
+  {
+    "name": "Angular Docker CI/CD",
+    "repo": "Aries-Surya/Angular-Docker-CI-CD",
+    "description": "Full CI/CD pipeline with Docker and GitHub Actions, 50% faster deploys",
+    "tags": ["Docker", "GitHub Actions", "Angular"]
+  },
+  {
+    "name": "AWS Cloud Monitoring",
+    "repo": "Aries-Surya/AWS-Cloud-Monitoring",
+    "description": "Real-time EC2 monitoring with CloudWatch and CloudTrail log analysis",
+    "tags": ["AWS", "CloudWatch", "Python"]
+  }
+]

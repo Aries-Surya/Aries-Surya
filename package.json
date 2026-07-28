@@ -1,0 +1,13 @@
+{
+  "name": "aries-surya-profile",
+  "version": "1.0.0",
+  "description": "Surya Prakash's GitHub Profile README",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "generate-banner": "python scripts/generate_banner.py",
+    "generate-jet": "node scripts/generate.mjs"
+  }
+}
