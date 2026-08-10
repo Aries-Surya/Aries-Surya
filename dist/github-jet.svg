@@ -240,7 +240,8 @@
 <rect x="468.00" y="71.00" width="11" height="11" rx="2" ry="2" fill="#40c463"><animate attributeName="fill" dur="20s" repeatCount="indefinite" keyTimes="0;0.4661;0.4721;0.5339;0.5399;1" values="#40c463;#40c463;#39d353;#40c463;#39d353;#40c463"/></rect>
 <rect x="468.00" y="85.00" width="11" height="11" rx="2" ry="2" fill="#40c463"><animate attributeName="fill" dur="20s" repeatCount="indefinite" keyTimes="0;0.4661;0.4721;0.5339;0.5399;1" values="#40c463;#40c463;#39d353;#40c463;#39d353;#40c463"/></rect>
 <rect x="468.00" y="99.00" width="11" height="11" rx="2" ry="2" fill="#40c463"/>
-<rect x="482.00" y="15.00" width="11" height="11" rx="2" ry="2" fill="#ebedf0"/>
+<rect x="482.00" y="15.00" width="11" height="11" rx="2" ry="2" fill="#40c463"/>
+<rect x="482.00" y="29.00" width="11" height="11" rx="2" ry="2" fill="#ebedf0"/>
 </g>
 <g id="bullets">
 <circle cx="375.5" cy="128" r="2.4" fill="#7ee787"><animate attributeName="cy" dur="20s" repeatCount="indefinite" keyTimes="0;0.3505;0.3685;1" values="128;128;104.5;104.5"/><animate attributeName="opacity" dur="20s" repeatCount="indefinite" keyTimes="0;0.3505;0.3685;0.3745;1" values="0;1;1;0;0"/></circle>
